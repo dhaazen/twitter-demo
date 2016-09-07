@@ -1,5 +1,4 @@
-# new-project
-
+# Twitter Demo Project
 This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 4.0.4.
 
 ## Getting Started
@@ -9,6 +8,9 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 - [Git](https://git-scm.com/)
 - [Node.js and npm](nodejs.org) Node >= 4.x.x, npm >= 2.x.x
 - [Gulp](http://gulpjs.com/) (`npm install --global gulp`)
+- Environment Variables (Valid Twitter API Credentials)
+  - TWITTER_CLIENT_KEY
+  - TWITTER_CLIENT_SECRET
 
 ### Developing
 
@@ -18,4 +20,4 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 
 ## Testing
 
-Running `npm test` will run the unit tests with karma.
+Running `gulp test` will run the client and server side unit tests with karma.
