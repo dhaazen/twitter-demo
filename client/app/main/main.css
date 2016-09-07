@@ -42,13 +42,23 @@ label {
   font-weight: bold;
 }
 
+.tweet-container {
+  width: 90%;
+}
+
+.tweet-container:hover {
+  background: #009CD7;
+  border-radius: 5px;
+}
+
 .tweet {
   display: flex;
   margin: 10px;
   padding: 10px;
-  width: 90%;
   background-color: white;
   border-radius: 5px;
+  text-decoration: none;
+  color: black;
 }
 
 .tweet-content {

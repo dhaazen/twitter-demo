@@ -9,19 +9,21 @@
         </div>
         <div class="tweet-feed">
             <h3>10 Latest Tweets From <a href="https://twitter.com/salesforce">@salesforce</a></h3>
-            <div class="tweet" ng-repeat="tweet in $ctrl.twitterData | filter: $ctrl.filterText">
-                <div>
-                    <img ng-src="{{tweet.user.profile_image_url}}">
-                </div>
-                <div class="tweet-content">
-                    <div class="tweet-user-info">
-                        <span class="bold username">{{tweet.user.name}}</span> @{{tweet.user.screen_name}}
+            <div class="tweet-container" ng-repeat="tweet in $ctrl.twitterData | filter: $ctrl.filterText">
+                <a class="tweet" ng-href="{{tweet.tweetLink}}">
+                    <div>
+                        <img ng-src="{{tweet.user.profile_image_url}}">
                     </div>
-                    <div ng-bind-html="tweet.text | linky" class="tweet-text"></div>
-                    <div class="retweet-counter">
-                        Retweets: {{tweet.retweet_count}}
+                    <div class="tweet-content">
+                        <div class="tweet-user-info">
+                            <span class="bold username">{{tweet.user.name}}</span> @{{tweet.user.screen_name}}
+                        </div>
+                        <div ng-bind-html="tweet.text" class="tweet-text"></div>
+                        <div class="retweet-counter">
+                            Retweets: {{tweet.retweet_count}}
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
