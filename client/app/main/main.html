@@ -1,0 +1,28 @@
+<header class="banner">
+    <h1>Twitter Demo App</h1>
+</header>
+<div class="wrapper">
+    <div class="content">
+        <div class="filter">
+            <label for="tweetFilter">Filter by Tweet Text: </label>
+            <input type="text" name="tweetFilter" size="40" ng-model="$ctrl.filterText.text">
+        </div>
+        <div class="tweet-feed">
+            <h3>10 Latest Tweets From <a href="https://twitter.com/salesforce">@salesforce</a></h3>
+            <div class="tweet" ng-repeat="tweet in $ctrl.twitterData | filter: $ctrl.filterText">
+                <div>
+                    <img ng-src="{{tweet.user.profile_image_url}}">
+                </div>
+                <div class="tweet-content">
+                    <div class="tweet-user-info">
+                        <span class="bold username">{{tweet.user.name}}</span> @{{tweet.user.screen_name}}
+                    </div>
+                    <div ng-bind-html="tweet.text | linky" class="tweet-text"></div>
+                    <div class="retweet-counter">
+                        Retweets: {{tweet.retweet_count}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

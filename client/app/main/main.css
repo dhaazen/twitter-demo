@@ -1,0 +1,76 @@
+.banner {
+  display: flex;
+  justify-content: center;
+  color: white;
+  background-color: #009CD7;
+  height: 75px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 0 0 70%;
+}
+
+.tweet-feed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: lightgrey;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.filter {
+  margin: 10px 0;
+  align-self: flex-start;
+}
+
+input {
+  padding: 5px;
+}
+
+label {
+  margin: 0 10px 0 0;
+  font-weight: bold;
+}
+
+.tweet {
+  display: flex;
+  margin: 10px;
+  padding: 10px;
+  width: 90%;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.tweet-content {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.tweet-user-info {
+  display: flex;
+}
+
+.tweet-text {
+  font-size: 20px;
+  margin: 3px 0;
+}
+
+.username {
+  padding-right: 5px;
+}
+
+.retweet-counter {
+  align-self: flex-end;
+}

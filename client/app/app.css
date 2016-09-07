@@ -1,0 +1,13 @@
+/**
+ * App-wide Styles
+ */
+
+.bold {
+  font-weight: bold;
+}
+
+/* Component styles are injected through gulp */
+/* inject:css */
+@import 'main/main.css';
+@import '../components/footer/footer.css';
+/* endinject */
