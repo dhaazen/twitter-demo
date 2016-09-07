@@ -31,4 +31,11 @@ describe('Component: MainComponent', function() {
     expect(mainComponent.twitterData.length)
       .to.equal(4);
   });
+
+  it('should the Controller to have a timer function set when initialized', function() {
+    mainComponent.$onInit();
+    mainComponent.timer;
+    expect(mainComponent.timer)
+      .to.not.be.undefined;
+  });
 });

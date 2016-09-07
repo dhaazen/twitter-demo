@@ -432,18 +432,6 @@ gulp.task('coverage:integration', () => {
         // Creating the reports after tests ran
 });
 
-// Downloads the selenium webdriver
-gulp.task('webdriver_update', webdriver_update);
-
-gulp.task('test:e2e', ['webpack:e2e', 'env:all', 'env:test', 'start:server', 'webdriver_update'], cb => {
-    gulp.src(paths.client.e2e)
-        .pipe(protractor({
-            configFile: 'protractor.conf.js',
-        }))
-        .on('error', e => { throw e })
-        .on('end', () => { process.exit() });
-});
-
 gulp.task('test:client', done => {
     new KarmaServer({
       configFile: `${__dirname}/${paths.karma}`,
