@@ -1,5 +1,7 @@
 # Twitter Demo Project
-This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 4.0.4.
+### Live Demo
+
+https://twitter-demo-app.mybluemix.net
 
 ## Getting Started
 
@@ -21,3 +23,7 @@ This project was generated with the [Angular Full-Stack Generator](https://githu
 ## Testing
 
 Running `gulp test` will run the client and server side unit tests with karma.
+
+### Disclaimer
+
+The scaffolding for this project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 4.0.4.
