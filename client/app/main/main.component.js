@@ -16,7 +16,6 @@ export class MainController {
   // Twitter Data and begin Polling timer
   $onInit() {
     this._getCurrentData(response => {
-      console.log(response)
       this.twitterData = this._formatResponse(response);
     }).bind(this)();
 
@@ -40,40 +39,77 @@ export class MainController {
   // Formats the received twitter data adding in links
   // as needed
   _formatResponse(twitterData) {
-
     let formattedTwitterData = {};
 
-    formattedTwitterData = twitterData.map((tweet, i) => {
-      let newTweet = tweet;
-      let textArr = tweet.text.split(' ');
-      const httpRegEx = /https:\/\/.*/;
-      const atRegEx = /@\w*/g;
-
-      newTweet.tweetLink = textArr.pop();
-      newTweet.text = textArr.join(' ');
-
-      // Replace links with display text
-      while(newTweet.text.match(httpRegEx)){
-        newTweet.text = newTweet.text.replace(httpRegEx, 
-          `<a href="${tweet.entities.urls[0].expanded_url}">${tweet.entities.urls[0].display_url}</a>`);
+    formattedTwitterData = twitterData.map((tweet) => {
+      if(tweet.text) {
+        tweet = _grabLinkToTweet(tweet);
+        tweet.text = this._replaceTweetLinks(tweet);
+        tweet.text = this._replaceUsernameReferences(tweet);
+        tweet.text = this._replaceHashTags(tweet);
       }
 
-      var matchArr;
-      var textBuffer;
-
-      // Replace @ mentions with links to users
-      while((matchArr = atRegEx.exec(newTweet.text)) !== null) {
-        textBuffer = newTweet.text.replace(matchArr[0], 
-          `<a href="https://twitter.com/${matchArr[0].slice(1)}">${matchArr[0]}</a>`);
-      }
-
-      newTweet.text = textBuffer || newTweet.text;
-
-      return newTweet;
+      return tweet;
     });
 
 
     return formattedTwitterData;
+  }
+
+  _grabLinkToTweet(tweet) {
+    let textArr = tweet.text.split(' ');
+    tweet.tweetLink = textArr.pop();
+    tweet.text = textArr.join(' ');
+    return tweet;
+  }
+
+  _replaceTweetLinks(tweet) {
+
+    const httpRegEx = /https?:\/\/[^ ]*/g;
+
+    let match, matchArr = [];
+
+    // Replace links with display text
+    while((match = httpRegEx.exec(tweet.text)) !== null) {
+      matchArr.push(match[0]);
+    }
+
+    matchArr.forEach((url, i) => {
+      tweet.text = tweet.text.replace(url,
+        `<a href="${url}">${tweet.entities.urls[i].display_url}</a>`);
+    });
+
+    return tweet.text;
+  }
+
+  _replaceUsernameReferences(tweet) {
+    const atRegEx = /@\w*/g;
+
+    var newText, matchArr;
+
+    // Replace @ mentions with links to users
+    while((matchArr = atRegEx.exec(tweet.text)) !== null) {
+      console.log('@ Match');
+      newText = tweet.text.replace(matchArr[0],
+        `<a href="https://twitter.com/${matchArr[0].slice(1)}">${matchArr[0]}</a>`);
+    }
+
+    return newText || tweet.text;
+  }
+
+  _replaceHashTags(tweet) {
+    const hashTagRegEx = /#\w*/g;
+
+    var newText, matchArr;
+
+    // Replace hashtag mentions with links to twitter Hashtags
+    while((matchArr = hashTagRegEx.exec(tweet.text)) !== null) {
+      console.log('# Match');
+      newText = tweet.text.replace(matchArr[0],
+        `<a href="https://twitter.com/hashtag/${matchArr[0].slice(1)}?src=hash">${matchArr[0]}</a>`);
+    }
+
+    return newText || tweet.text;
   }
 
   // Clear timer when controller is destroyed.

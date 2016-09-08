@@ -59,6 +59,7 @@ label {
   border-radius: 5px;
   text-decoration: none;
   color: black;
+  cursor: pointer;
 }
 
 .tweet-content {
