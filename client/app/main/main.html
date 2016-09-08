@@ -19,6 +19,11 @@
                             <span class="bold username">{{tweet.user.name}}</span> @{{tweet.user.screen_name}}
                         </div>
                         <div ng-bind-html="tweet.text" class="tweet-text"></div>
+                        <div ng-if="typeof(tweet.extended_entities.media) !== 'undefined'">
+                            <div ng-if="tweet.entities.media[0].type === 'photo'">
+                                <img class="media-content" ng-src="{{tweet.entities.media[0].media_url}}" width="{{tweet.entities.media[0].sizes.small.w}}" height="{{tweet.entities.media[0].sizes.small.h}}">
+                            </div>
+                        </div>
                         <div class="retweet-counter">
                             Retweets: {{tweet.retweet_count}}
                         </div>
