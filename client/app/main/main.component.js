@@ -41,9 +41,9 @@ export class MainController {
   _formatResponse(twitterData) {
     let formattedTwitterData = {};
 
-    formattedTwitterData = twitterData.map((tweet) => {
+    formattedTwitterData = twitterData.map(tweet => {
       if(tweet.text) {
-        tweet = _grabLinkToTweet(tweet);
+        tweet = this._grabLinkToTweet(tweet);
         tweet.text = this._replaceTweetLinks(tweet);
         tweet.text = this._replaceUsernameReferences(tweet);
         tweet.text = this._replaceHashTags(tweet);
@@ -56,6 +56,8 @@ export class MainController {
     return formattedTwitterData;
   }
 
+  // This will remove the last link from tweet text and
+  // add it to the body as a tweetLink attribute
   _grabLinkToTweet(tweet) {
     let textArr = tweet.text.split(' ');
     tweet.tweetLink = textArr.pop();
@@ -63,17 +65,20 @@ export class MainController {
     return tweet;
   }
 
+  // Parse tweet text for any links and replaces
+  // with hyperlinks with display text
   _replaceTweetLinks(tweet) {
-
     const httpRegEx = /https?:\/\/[^ ]*/g;
 
-    let match, matchArr = [];
+    let match;
+    let matchArr = [];
 
-    // Replace links with display text
+    // Put all matches in array
     while((match = httpRegEx.exec(tweet.text)) !== null) {
       matchArr.push(match[0]);
     }
 
+    // Replace all matches
     matchArr.forEach((url, i) => {
       tweet.text = tweet.text.replace(url,
         `<a href="${url}">${tweet.entities.urls[i].display_url}</a>`);
@@ -82,34 +87,48 @@ export class MainController {
     return tweet.text;
   }
 
+  // Parse tweet text for any username references
+  // and replaces with hyperlinks
   _replaceUsernameReferences(tweet) {
     const atRegEx = /@\w*/g;
 
-    var newText, matchArr;
+    let match;
+    let matchArr = [];
 
-    // Replace @ mentions with links to users
-    while((matchArr = atRegEx.exec(tweet.text)) !== null) {
-      console.log('@ Match');
-      newText = tweet.text.replace(matchArr[0],
-        `<a href="https://twitter.com/${matchArr[0].slice(1)}">${matchArr[0]}</a>`);
+    // Put all matches in array
+    while((match = atRegEx.exec(tweet.text)) !== null) {
+      matchArr.push(match[0]);
     }
 
-    return newText || tweet.text;
+    // Replace all matches
+    matchArr.forEach(user => {
+      tweet.text = tweet.text.replace(user,
+        `<a href="https://twitter.com/${user.slice(1)}">${user}</a>`);
+    });
+
+    return tweet.text;
   }
 
+  // Parse tweet text for any hash tag references
+  // and replaces with hyperlinks
   _replaceHashTags(tweet) {
     const hashTagRegEx = /#\w*/g;
 
-    var newText, matchArr;
+    let match;
+    let matchArr = [];
 
-    // Replace hashtag mentions with links to twitter Hashtags
-    while((matchArr = hashTagRegEx.exec(tweet.text)) !== null) {
-      console.log('# Match');
-      newText = tweet.text.replace(matchArr[0],
-        `<a href="https://twitter.com/hashtag/${matchArr[0].slice(1)}?src=hash">${matchArr[0]}</a>`);
+    // Put all matches in array
+    while((match = hashTagRegEx.exec(tweet.text)) !== null) {
+      matchArr.push(match[0]);
     }
 
-    return newText || tweet.text;
+    // Replace all matches
+    matchArr.forEach(hashTag => {
+      tweet.text = tweet.text.replace(hashTag,
+        `<a href="https://twitter.com/hashtag/${hashTag.slice(1)}?src=hash">${hashTag}</a>`);
+    });
+
+    return tweet.text;
   }
 
   // Clear timer when controller is destroyed.
