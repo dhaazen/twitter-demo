@@ -20,9 +20,9 @@ var all = {
   // Server IP
   ip: process.env.IP || '0.0.0.0',
 
-  twitterClientKey: process.env.TWITTER_CLIENT_KEY,
+  twitterClientKey: process.env.TWITTER_CLIENT_KEY || JSON.parse(process.env.VCAP_SERVICES)['user-provided'][0].credentials.TWITTER_CLIENT_KEY,
 
-  twitterClientSecret: process.env.TWITTER_CLIENT_SECRET
+  twitterClientSecret: process.env.TWITTER_CLIENT_SECRET || JSON.parse(process.env.VCAP_SERVICES)['user-provided'][0].credentials.TWITTER_CLIENT_SECRET
 };
 
 // Export the config object based on the NODE_ENV
